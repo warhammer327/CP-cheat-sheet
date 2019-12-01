@@ -1,0 +1,56 @@
+#include<bits/stdc++.h>
+#define INF (int)1e9
+#define PI 3.1415926535897932384626433832795
+#define ll long long
+#define MP make_pair
+#define IN insert
+#define PB push_back
+#define MEM(arr,k) memset(arr,k,sizeof arr)
+#define SORT(a) sort(a.begin(),a.end())
+#define input freopen("input.txt","r",stdin)
+#define output freopen("output.txt","w",stdout)
+ 
+using namespace std;
+ 
+const int maxN=1e5;
+ 
+bool vis[maxN];
+vector<int>edge[maxN];
+ 
+void DFS(int s)
+{
+    vis[s]=true;
+    int len = edge[s].size();
+    for(int i=0;i<len;i++)
+    {
+        if(vis[edge[s][i]]==false)
+        {
+            DFS(edge[s][i]);
+        }
+    }
+}
+ 
+int main()
+{
+    int n,m,x;
+    cin>>n>>m;
+    for(int i=0;i<m;i++)
+    {
+        int p,q;
+        cin>>p>>q;
+        edge[p].PB(q);
+        edge[q].PB(p);
+    }
+    cin>>x;
+    DFS(x);
+    int k =0;
+    for(int i=1;i<=n;i++)
+    {
+        if(vis[i]==false)
+        {
+            k++;
+        }
+    }
+    cout<<k<<endl;
+ 
+}
