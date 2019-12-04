@@ -1,0 +1,18 @@
+import java.util.Calendar;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+      Scanner in = new Scanner(System.in);
+      int t = in.nextInt();
+      String[] dofweek ={"Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"};
+      Calendar cal = Calendar.getInstance();
+
+      for(int i=1;i<=t;i++){
+          int m = in.nextInt(), d = in.nextInt();
+          cal.set(2011,m-1,d-1);
+          System.out.println(dofweek[cal.get(Calendar.DAY_OF_WEEK)%7]);
+      }
+
+    }
+}
