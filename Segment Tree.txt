@@ -1,0 +1,55 @@
+#include<bits/stdc++.h>
+#define INF (int)1e9
+#define PI 3.1415926535897932384626433832795
+#define ll long long
+#define MP make_pair
+#define IN insert
+#define PB push_back
+#define MEM(arr,k) memset(arr,k,sizeof arr)
+#define SORT(a) sort(a.begin(),a.end())
+#define input freopen("input.txt","r",stdin)
+#define output freopen("output.txt","w",stdout)
+
+using namespace std;
+
+const int maxn=1e5;
+int seg[maxn],arr[maxn];
+
+void built(int x,int l, int r)
+{
+    if(l==r)
+    {
+        seg[x]=arr[l];
+        return ;
+    }
+    int mid = (l+r)/2;
+    built(x*2+1,l,mid);
+    built(x*2+2,mid+1,r);
+    seg[x] = min(seg[x*2+1],seg[x*2+2]);
+
+
+}
+
+int query(int x,int l, int r, int qs, int qe)
+{
+    if(r<qs || l>qs)
+    {
+        return maxn;
+    }
+    if(l>=qs && r<=qe)
+    {
+        return seg[x];
+    }
+    int mid=(l+r)/2;
+    return min(query(x*2+1,l,mid,qs,qe),query(x*2+2,mid+1,r,qs,qe));
+}
+
+int main()
+{
+    int n;
+    cin>>n;
+    arr[n];
+    //array input;
+    built(0,1,n);
+    //input query;
+}

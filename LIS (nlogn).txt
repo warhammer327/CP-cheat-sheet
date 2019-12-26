@@ -1,0 +1,36 @@
+int ceilElement(int a[],int start,int end,int key){
+    while(end-start > 1){
+        int mid = start +(end - start)/2;
+        if(a[mid]>=key){
+            end = mid;
+        }
+        else{
+            start = mid;
+        }
+    }
+    return end;
+}
+  
+int longestIncreasingSubsequence(int input[], int size)
+{
+    if(!size)
+        return 0;
+  
+    int a[size];
+    int length=1;
+  
+    a[0] = input[0];
+  
+    for(int i=1; i<size; i++)
+    {
+        if(input[i]< a[0]){
+            a[0]=input[i];
+        }
+        else if(input[i]>a[length-1]){
+            a[length++]=input[i];
+        }
+        else
+            a[ ceilElement(a,-1,length-1,input[i]) ]= input[i];
+    }
+    return length;
+}

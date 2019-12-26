@@ -1,0 +1,86 @@
+#include<bits/stdc++.h>
+#define INF (int)1e9
+#define PI 3.1415926535897932384626433832795
+#define ll long long
+#define MP make_pair
+#define IN insert
+#define PB push_back
+#define LEN(a) sizeof(a)/sizeof(a[0])
+#define MEM(arr,k) memset(arr,k,sizeof arr)
+#define sf scanf
+#define pf printf
+#define input freopen("input","r",stdin)
+#define output freopen("output","w",stdout)
+
+//https://www.geeksforgeeks.org/sorting-vector-of-pairs-in-c-set-1-sort-by-first-and-second/
+
+using namespace std;
+
+
+int id[10005];
+pair<int,pair<int, int>>p[10005];
+
+void ini()
+{
+	for(int i=0;i<10005;i++)
+	{
+		id[i]=i;
+	}
+}
+
+int root(int x)
+{
+	while(id[x]!=x)
+	{
+		id[x] = id[id[x]];
+		x = id[x];
+	}
+	return x;
+}
+
+void union1(int x,int y)
+{
+	int p = root(x);
+	int q = root(y);
+	id[p] = id[q];
+}
+
+ll krusk(pair<int, pair<int, int>>p[],int e)
+{
+	ini();
+	int x,y;
+	ll cost,mincost=0;
+	for(int i=0;i<e;i++)
+	{
+		x = p[i].second.first;
+		y = p[i].second.second;
+		cost = p[i].first;
+		if(root(x)!=root(y))
+		{
+			mincost += cost;
+			union1 (x,y);
+		}
+	}
+	return mincost;
+}
+
+int main()
+{
+	input;
+	int u,v,c,t,n,e;
+	sf("%d",&t);
+	while(t--)
+	{
+		
+		sf("%d %d",&n,&e);
+		
+		for(int i=0;i<e;i++)
+		{
+			sf("%d %d %d",&u,&v,&c);
+			p[i] = make_pair(c,make_pair(u,v));
+		}
+		sort(p,p+e);
+		cout<<krusk(p,e)<<endl;
+	}
+}
+

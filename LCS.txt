@@ -1,0 +1,53 @@
+#include<bits/stdc++.h>
+#define INF (int)1e9
+#define PI 3.1415926535897932384626433832795
+#define ll long long
+#define MP make_pair
+#define IN insert
+#define PB push_back
+#define MEM(arr,k) memset(arr,k,sizeof arr)
+#define SORT(a) sort(a.begin(),a.end())
+#define input freopen("input.txt","r",stdin)
+#define output freopen("output.txt","w",stdout)
+
+using namespace std;
+int dp[1001][1001];
+int lcs(string s1,string s2,int l1, int l2)
+{
+
+    for(int i=0;i<=l1;i++)
+    {
+        for(int j = 0;j<=l2;j++)
+        {
+            if(i==0|| j==0)
+            {
+                dp[i][j]=0;
+            }
+            else if(s1[i-1]==s2[j-1])
+            {
+                dp[i][j] = 1+dp[i-1][j-1];
+            }
+            else
+            {
+                dp[i][j] = max(dp[i-1][j],dp[i][j-1]);
+            }
+        }
+    }
+    return dp[l1][l2];
+}
+
+int main()
+{
+    //input;
+    //output;
+    string s1,s2;
+    while(getline(cin,s1))
+    {
+        getline(cin,s2);
+        int l1=s1.size();
+        int l2=s2.size();
+        cout<<lcs(s1,s2,l1,l2)<<endl;
+
+    }
+    return 0;
+}
