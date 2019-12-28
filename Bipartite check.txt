@@ -1,0 +1,78 @@
+#include<bits/stdc++.h>
+#define INF (int)1e9
+#define PI 3.1415926535897932384626433832795
+#define ll long long
+#define MP make_pair
+#define IN insert
+#define PB push_back
+#define LEN(a) sizeof(a)/sizeof(a[0])
+#define MEM(arr,k) memset(arr,k,sizeof arr)
+#define SORT(a) sort(a.begin(),a.end())
+#define input freopen("input.txt","r",stdin)
+#define output freopen("output.txt","w",stdout)
+
+using namespace std;
+
+
+int main()
+{
+    int v,e;
+    while(cin>>v && v)
+    {
+        vector<int>edge[v];
+        vector<int>color(v,2);
+        bool bipartite = true;
+        int e;
+        cin>>e;
+        for(int i=0;i<e;i++)
+        {
+            int x,y;
+            cin>>x>>y;
+            edge[x].PB(y);
+            edge[y].PB(x);
+        }
+        queue<int>q;
+        color[0] = 0;
+        q.push(0);
+        while(!q.empty() && bipartite)
+        {
+            int p = q.front();
+            q.pop();
+            int len = edge[p].size();
+            for(int i=0;i<len;i++)
+            {
+                //int v = ;
+                if(color[edge[p][i]]==2)
+                {
+                    color[edge[p][i]] = 1 - color[p];
+                    q.push(edge[p][i]);
+                }
+                else if(color[edge[p][i]] == color[p])
+                {
+                    bipartite = false;
+                    break;
+                }
+            }
+        }
+        if(bipartite)
+            cout<<"BICOLORABLE.\n";
+        else
+            cout<<"NOT BICOLORABLE.\n";
+    }
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

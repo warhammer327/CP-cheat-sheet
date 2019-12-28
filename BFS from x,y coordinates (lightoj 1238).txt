@@ -1,0 +1,114 @@
+#include<bits/stdc++.h>
+#define INF (int)1e9
+#define PI 3.1415926535897932384626433832795
+#define ll long long
+#define MP make_pair
+#define IN insert
+#define PB push_back
+#define sf scanf
+#define pf printf
+#define LEN(a) sizeof(a)/sizeof(a[0])
+#define MEM(arr,k) memset(arr,k,sizeof arr)
+#define input freopen("input","r",stdin)
+#define output freopen("output","w",stdout)
+
+int X8[] = {0, 1, 0, -1, 1, -1, 1, -1};
+int Y8[] = {1, 0, -1, 0, 1, -1, -1, 1};
+int X4[]={+1,-1,+0,+0};
+int Y4[]={+0,+0,+1,-1};
+
+using namespace std;
+
+char grid[25][25];
+bool vis[25][25];
+int dist[25][25];
+
+int main()
+{
+	input;
+    int t,m,n,hx,hy,ax,ay,bx,by,cx,cy,c=1;
+    sf("%d",&t);
+    while(t--)
+    {
+		sf("%d %d",&m,&n);
+		getchar();
+		for(int i=0;i<m;i++)
+		{
+			for(int j=0;j<n;j++)
+			{
+				cin>>grid[i][j];
+				if(grid[i][j]=='h')
+				{
+					hx=i;
+					hy=j;
+				}
+				else if(grid[i][j]=='a')
+				{
+					ax=i;
+					ay=j;
+					//cout<<ax<<" "<<ay<<endl;
+				}
+				else if(grid[i][j]=='b')
+				{
+					bx=i;
+					by=j;
+				}
+				else if(grid[i][j]=='c')
+				{
+					cx=i;
+					cy=j;
+					//cout<<cx<<" "<<cy<<endl;
+				}
+			}
+			
+		}
+		for(int i=0;i<m;i++)
+		{
+			for(int j=0;j<n;j++)
+			{
+				dist[i][j]=INT_MAX;
+				vis[i][j]=false;
+			}
+		}
+		
+		queue<pair<int,int>>q;
+		int px,py,x,y;
+		dist[hx][hy]=0;
+		vis[hx][hy]=true;
+		//queue<pair<int,int>>q;
+		q.push(make_pair(hx,hy));
+		while(!q.empty())
+		{
+			px = q.front().first;
+			py = q.front().second;
+			q.pop();
+			for(int i=0;i<4;i++)
+			{
+				x = px + Y4[i];
+				y = py + X4[i];
+				if(x>-1 && y>-1 && x<m && y<n)
+				{
+					if(grid[x][y]!='m' && grid[x][y]!='#' && vis[x][y]==false)
+					{
+						//cout<<"done"<<endl;
+						dist[x][y] = min(dist[px][py]+1,dist[x][y]);
+						vis[x][y] = true;
+						q.push(make_pair(x,y));
+					}
+					
+				}
+			}
+		}
+		int x1= dist[ax][ay];
+		int x2= dist[bx][by];
+		int x3= dist[cx][cy];
+		
+		pf("Case %d: %d\n",c++,max({x1,x2,x3}));
+		
+				
+		
+		
+	}
+    return 0;
+}
+
