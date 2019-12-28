@@ -1,0 +1,62 @@
+#include<bits/stdc++.h>
+#define INF (int)1e9
+#define PI 3.1415926535897932384626433832795
+#define ll long long
+#define MP make_pair
+#define IN insert
+#define PB push_back
+#define LEN(a) sizeof(a)/sizeof(a[0])
+#define MEM(arr,k) memset(arr,k,sizeof arr)
+#define sf scanf
+#define pf printf
+#define input freopen("input.txt","r",stdin)
+#define output freopen("output.txt","w",stdout)
+
+using namespace std;
+bool dp[11][11];
+int mat[11][11];
+int n,m;
+bool flood_fill(int x, int y, int n, int m)
+{
+	if(x>n || y>m) return false;
+	if(x<0 || y<0) return false;
+	if(x==n && y==m) return true;
+	
+	if(dp[x][y] == true) return false;
+	dp[x][y] = true;
+	if(mat[x][y] == 0)
+	return false;
+	
+	if(flood_fill(x+1,y,n,m)==true) return true;
+	if(flood_fill(x,y+1,n,m)==true) return true;
+	if(flood_fill(x-1,y,n,m)==true) return true;
+	if(flood_fill(x,y-1,n,m)==true) return true;
+	
+	return false;
+}
+int main()
+{
+	int n,m;
+	cin>>n>>m;
+	for(int i=0;i<11;i++)
+	{
+		for(int j=0;j<11;j++)
+		{
+			dp[i][j] = false;
+		}
+	}
+	for(int i=1;i<=n;i++)
+	{
+		for(int j=1;j<=m;j++)
+		{
+			sf("%d",&mat[i][j]);
+		}
+	}
+	
+	if(flood_fill(1,1,n,m))
+		cout<<"Yes\n";
+	else
+		cout<<"No\n";
+	
+}
+
