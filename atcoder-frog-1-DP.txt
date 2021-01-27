@@ -1,0 +1,61 @@
+#include<bits/stdc++.h>
+#define PI 3.1415926535897932384626433832795
+#define ll long long
+#define sf scanf
+#define pf printf
+#define MOD 1000000007
+#define debug(x) cout<<"---------"<<x<<endl;
+#define LEN(a) sizeof(a)/sizeof(a[0])
+#define MEM(arr,k) memset(arr,k,sizeof arr)
+#define input freopen("01input","r",stdin)
+#define output freopen("01output","w",stdout)
+#define allset ios_base::sync_with_stdio(false);cin.tie(NULL)
+
+int X8[] = {0, 1, 0, -1, 1, -1, 1, -1};
+int Y8[] = {1, 0, -1, 0, 1, -1, -1, 1};
+int X4[] = {1,-1, 0, 0};
+int Y4[] = {0, 0, 1,-1};
+
+using namespace std;
+int n;
+int arr[100000+10];
+int dp[100000+10];
+
+
+int solve(int indx){
+    if(indx>=n)
+        return INT_MAX/2;
+    if(indx+1==n)
+        return 0;
+    if (dp[indx]!=-1) 
+        return dp[indx];
+
+    int one_step = abs(arr[indx]-arr[indx+1]);
+    int two_step = abs(arr[indx]-arr[indx+2]);
+
+
+    int cost = min((one_step+solve(indx+1)),(two_step+solve(indx+2)));
+
+    dp[indx]= cost;
+
+    return dp[indx];
+}
+
+int main()
+{	
+
+    scanf("%d",&n); 
+
+    MEM(dp,-1); 
+    for(int i = 0; i<n; i++){
+        scanf("%d",&arr[i]);
+    }
+   
+    int result = solve(0);
+       
+
+    printf("%d\n",result);
+    return 0;
+}
+
+
